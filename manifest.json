@@ -1,0 +1,22 @@
+{
+	"manifest_version": 2,
+	"name": "Cookie Friend",
+	"version": "1.0.0",
+	"description": "A friendly bot that helps you make cookies.",
+	"homepage_url": "https://github.com/Avalander/cookie-friend",
+	"icons": {
+		"48": "icons/cookie-48.png"
+	},
+	"permissions": [
+		"*://orteil.dashnet.org/cookieclicker/"
+	],
+	"content_scripts": [{
+		"matches": [ "*://orteil.dashnet.org/cookieclicker/" ],
+		"js": [ "src/main.js" ]
+	}],
+	"browser_action": {
+		"default_icon": "icons/cookie-32.png",
+		"default_title": "Cookie Friend",
+		"default_popup": "src/popup/popup.html"
+	}
+}
