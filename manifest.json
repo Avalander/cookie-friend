@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Cookie Friend",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "A friendly bot that helps you make cookies.",
 	"homepage_url": "https://github.com/Avalander/cookie-friend",
 	"icons": {
@@ -19,5 +19,10 @@
 		"default_icon": "icons/cookie-32.png",
 		"default_title": "Cookie Friend",
 		"default_popup": "src/popup/popup.html"
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{afd580c0-caf6-443a-9058-6ac35c340acb}"
+		}
 	}
 }
