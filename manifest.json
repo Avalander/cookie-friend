@@ -8,7 +8,8 @@
 		"48": "icons/cookie-48.png"
 	},
 	"permissions": [
-		"*://orteil.dashnet.org/cookieclicker/"
+		"*://orteil.dashnet.org/cookieclicker/",
+		"storage"
 	],
 	"content_scripts": [{
 		"matches": [ "*://orteil.dashnet.org/cookieclicker/" ],

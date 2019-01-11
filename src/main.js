@@ -2,6 +2,10 @@ const Game = window.wrappedJSObject.Game
 
 let autoclick = null
 
+const delay = time => new Promise((resolve) =>
+	setTimeout(resolve, time)
+)
+
 const actions = {
 	enableAutoclick: ({ interval }) => {
 		clearInterval(autoclick)
@@ -12,6 +16,7 @@ const actions = {
 	},
 	disableAutoclick: () => {
 		clearInterval(autoclick)
+		browser.storage.local.remove('autoclick')
 	}
 }
 
@@ -21,9 +26,19 @@ const getHandler = action =>
 		: () => console.warn(`No handler found for action '${action}'.`)
 	)
 
-browser.runtime.onMessage.addListener(message => {
-	console.debug('Message', JSON.stringify(message, null, 2))
+delay(500)
+	.then(() => {
+		console.log('Running Cookie Friend!')
 
-	const { action, ...props } = message
-	getHandler(action) (props)
-})
+		browser.runtime.onMessage.addListener(message => {
+			console.debug('Message', JSON.stringify(message, null, 2))
+
+			const { action, ...props } = message
+			getHandler(action)(props)
+		})
+
+		browser.storage.local.get('autoclick')
+			.then(x => {
+				if (x) getHandler('enableAutoclick')(x.autoclick)
+			})
+	})
