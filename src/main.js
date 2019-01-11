@@ -26,7 +26,7 @@ const getHandler = action =>
 		: () => console.warn(`No handler found for action '${action}'.`)
 	)
 
-delay(500)
+delay(800)
 	.then(() => {
 		console.log('Running Cookie Friend!')
 
