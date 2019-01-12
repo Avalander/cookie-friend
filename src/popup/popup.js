@@ -8,9 +8,9 @@ const test = document.querySelector('#test')
 
 autoclick.set.onclick = () =>
 	getActiveTab()
-		.then(enableAutoclick(autoclick.interval.value || 500))
+		.then(enableAutoclick(parseInterval(autoclick.interval)))
 		.then(() => browser.storage.local.set({
-			autoclick: { interval: autoclick.interval.value || 500 }
+			autoclick: { interval: parseInterval(autoclick.interval) }
 		}))
 
 autoclick.clear.onclick = () =>
@@ -19,6 +19,16 @@ autoclick.clear.onclick = () =>
 		.then(() => browser.storage.local.remove('autoclick'))
 
 init()
+
+const INTERVAL_PATTERN = /\d+/
+
+function parseInterval({ value }) {
+	if (!value) return 500
+	return (INTERVAL_PATTERN.test(value) && parseInt(value) > 50
+		? parseInt(value)
+		: 50
+	)
+}
 
 function getActiveTab() {
 	return browser.tabs.query({ active: true, currentWindow: true })
