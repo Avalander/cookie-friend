@@ -41,20 +41,15 @@ delay(800)
 			getHandler(action)(props)
 		})
 
-		browser.storage.local.get('autoclick')
-			.then(x => {
-				if (x) getHandler('enableAutoclick')(x.autoclick)
+		browser.storage.local.get([ 'autoclick', 'shimmers' ])
+			.then(({ autoclick, shimmers}) => {
+				if (autoclick) getHandler('enableAutoclick') (autoclick)
+				if (shimmers) getHandler('setShimmers') ({ shimmers })
 			})
 		
 		setInterval(() => {
-			console.log(Game.shimmers)
-			console.log('Map', Game.shimmers.map)
-			Game.shimmers.forEach(shimmer => {
-				console.log('Can pop', shimmers.includes(shimmer.type))
-				if (shimmers.includes(shimmer.type) && shimmer.wrath == 0) {
-					console.log('pop')
-					shimmer.pop()
-				}
-			})
+			Array.from(Game.shimmers)
+				.filter(({ type, wrath }) => shimmers.includes(type) && wrath == 0)
+				.forEach(x => x.pop())
 		}, 500)
 	})
