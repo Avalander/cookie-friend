@@ -8,11 +8,13 @@ import {
 	input,
 	label,
 	main,
+	pre,
 	section,
 	span,
 } from 'Popup/html'
 import {
 	Header,
+	Switch,
 } from 'Popup/components'
 
 
@@ -132,23 +134,15 @@ const view = (state, actions) =>
 			]),
 			section({ class: 'control' }, [
 				span('Autoclick Golden Cookies'),
-				label({
-					class: 'switch',
-				}, [
-					input({
-						type: 'checkbox',
-						checked: state.shimmers.golden
-					}),
-					span({
-						class: 'slider',
-						onclick: actions.shimmers.toggleGolden,
-					}),
-				])
+				Switch({
+					on: state.shimmers.golden,
+					onclick: actions.shimmers.toggleGolden,
+				}),
 			])
 		]),
 		div([
 			Header('Debug'),
-			div(JSON.stringify(state, null, 2)),
+			pre(JSON.stringify(state, null, 2)),
 		])
 	])
 
