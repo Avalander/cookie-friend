@@ -7,14 +7,27 @@
 <body>
 	<div id="popup-content">
 		<div id="autoclick">
-			<h3>Autoclick</h3>
-			<label for="autoclick-interval">Interval (ms)</label>
-			<input type="text" id="autoclick-interval" placeholder="500" />
-			<button id="set-autoclick" class="primary">Set</button>
-			<button id="clear-autoclick" class="primary">Cancel</button>
+			<header>
+				<h3>Autoclick</h3>
+			</header>
+			<section>
+				<label for="autoclick-interval">Interval (ms)</label>
+				<input type="text" id="autoclick-interval" placeholder="500" />
+				<button id="set-autoclick" class="primary">Set</button>
+				<button id="clear-autoclick" class="primary">Cancel</button>
+			</section>
+			<section class="control">
+				<span>Autoclick Golden Cookies</span>
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider"></span>
+				</label>
+			</section>
 		</div>
 		<div>
-			<h3>Debug</h3>
+			<header>
+				<h3>Debug</h3>
+			</header>
 			<div id="test"></div>
 		</div>
 	</div>
