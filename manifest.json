@@ -18,7 +18,7 @@
 	"browser_action": {
 		"default_icon": "icons/cookie-32.png",
 		"default_title": "Cookie Friend",
-		"default_popup": "src/popup/popup.html"
+		"default_popup": "build/popup.html"
 	},
 	"browser_specific_settings": {
 		"gecko": {

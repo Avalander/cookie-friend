@@ -1,7 +1,11 @@
+import 'Popup/popup.css'
+
+
 const autoclick = {
 	interval: document.querySelector('#autoclick-interval'),
 	set: document.querySelector('#set-autoclick'),
 	clear: document.querySelector('#clear-autoclick'),
+	golden: document.querySelector('#autoclick-golden'),
 }
 const test = document.querySelector('#test')
 
@@ -17,6 +21,13 @@ autoclick.clear.onclick = () =>
 	getActiveTab()
 		.then(disableAutoclick)
 		.then(() => browser.storage.local.remove('autoclick'))
+
+autoclick.golden.onclick = () =>
+	getActiveTab()
+		.then(enableAutoclickCookies)
+		.then(() => browser.storage.local.set({
+			autoclick_shimmers: [ 'golden' ],
+		}))
 
 init()
 
@@ -48,14 +59,27 @@ function disableAutoclick(tab_id) {
 	})
 }
 
+function enableAutoclickCookies(tab_id) {
+	return browser.tabs.sendMessage(tab_id, {
+		action: 'enableShimmer',
+		type: 'golden',
+	})
+}
+
+const loadAutoclick = value =>
+	autoclick.interval.value = value.interval || ''
+
+const loadAutoclickGolden = (shimmers = []) =>
+	golden.checked = shimmers.includes('golden')
+
 function init() {
-	browser.storage.local.get('autoclick')
+	browser.storage.local.get([ 'autoclick', 'autoclick_shimmers' ])
 		.then(value => {
 			test.textContent = JSON.stringify(value, null, 2)
 			return value
 		})
-		.then(value => value
-			? autoclick.interval.value = value.autoclick.interval
-			: null
-		)
+		.then(({ autoclick, autoclick_shimmers }) => {
+			loadAutoclick(autoclick)
+			loadAutoclickGolden(autoclick_shimmers)
+		})
 }

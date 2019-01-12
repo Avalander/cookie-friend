@@ -1,6 +1,7 @@
 const Game = window.wrappedJSObject.Game
 
 let autoclick = null
+let shimmers = []
 
 const delay = time => new Promise((resolve) =>
 	setTimeout(resolve, time)
@@ -17,6 +18,9 @@ const actions = {
 	disableAutoclick: () => {
 		clearInterval(autoclick)
 		browser.storage.local.remove('autoclick')
+	},
+	setShimmers: ({ shimmers: value }) => {
+		shimmers = value
 	}
 }
 
@@ -41,4 +45,16 @@ delay(800)
 			.then(x => {
 				if (x) getHandler('enableAutoclick')(x.autoclick)
 			})
+		
+		setInterval(() => {
+			console.log(Game.shimmers)
+			console.log('Map', Game.shimmers.map)
+			Game.shimmers.forEach(shimmer => {
+				console.log('Can pop', shimmers.includes(shimmer.type))
+				if (shimmers.includes(shimmer.type) && shimmer.wrath == 0) {
+					console.log('pop')
+					shimmer.pop()
+				}
+			})
+		}, 500)
 	})
