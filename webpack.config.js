@@ -7,7 +7,7 @@ const OptimiseCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
 	entry: {
-		popup: path.resolve(__dirname, 'src', 'popup', 'popup.new.js'),
+		popup: path.resolve(__dirname, 'src', 'popup', 'popup.js'),
 	},
 	output: {
 		path: path.resolve(__dirname, 'build'),
