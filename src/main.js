@@ -1,6 +1,9 @@
 const Game = window.wrappedJSObject.Game
 
-let autoclick = null
+const state = {
+	autoclick: null,
+	shimmers: []
+}
 
 const delay = time => new Promise((resolve) =>
 	setTimeout(resolve, time)
@@ -8,15 +11,18 @@ const delay = time => new Promise((resolve) =>
 
 const actions = {
 	enableAutoclick: ({ interval }) => {
-		clearInterval(autoclick)
-		autoclick = setInterval(
+		clearInterval(state.autoclick)
+		state.autoclick = setInterval(
 			Game.ClickCookie,
 			interval
 		)
 	},
 	disableAutoclick: () => {
-		clearInterval(autoclick)
+		clearInterval(state.autoclick)
 		browser.storage.local.remove('autoclick')
+	},
+	setShimmers: ({ shimmers: value }) => {
+		state.shimmers = value
 	}
 }
 
@@ -37,8 +43,15 @@ delay(800)
 			getHandler(action)(props)
 		})
 
-		browser.storage.local.get('autoclick')
-			.then(x => {
-				if (x) getHandler('enableAutoclick')(x.autoclick)
+		browser.storage.local.get([ 'autoclick', 'shimmers' ])
+			.then(({ autoclick, shimmers}) => {
+				if (autoclick) getHandler('enableAutoclick') (autoclick)
+				if (shimmers) getHandler('setShimmers') ({ shimmers })
 			})
+		
+		setInterval(() => {
+			Array.from(Game.shimmers)
+				.filter(({ type, wrath }) => state.shimmers.includes(type) && wrath == 0)
+				.forEach(x => x.pop())
+		}, 500)
 	})
